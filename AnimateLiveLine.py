@@ -1,4 +1,3 @@
-
 import random
 from itertools import count
 import pandas as pd
@@ -10,18 +9,21 @@ from pymavlink import mavutil
 from mpl_toolkits.mplot3d import Axes3D
 
 import numpy as np
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+
 from matplotlib.cbook import get_sample_data
 #from mayavi import mlab
 import plotly.graph_objects as go
+import matplotlib.image as image
+from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
+
+import matplotlib.pyplot as plt
+from matplotlib.cbook import get_sample_data
+
+
 
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-
-# Define the colors for the lines
-#colors = ['purple', 'purple', 'r', 'y', 'g','r', 'r', 'y', 'purple','r', 'r', 'y', 'g','r', 'r', 'y', 'g','r', 'r', 'y', 'g','r', 'r', 'y', 'b','r']
-
 
 ax.set_title('3D Position of Drone')
 ax.set_zlabel('Z-Axis')
@@ -46,19 +48,17 @@ def animate(i):
     z = -(data[header3])
     c = data[header4]
 
-    ax.plot([x[i], x[i + 1]], [y[i], y[i + 1]], [z[i], z[i + 1]], color = c[i])
-    #ax.plot(x, y, z, color = c[i])
-    #ax.plot3D(x, y, -z, color = c[i])
-    #ax.plot3D(x, y, -z, color = c[i])
-    #ax.plot3D([x[i], x[i + 1]], [y[i], y[i + 1]], [z[i], z[i + 1]], color = c[i])
-    #ax.scatter(x, y, -z, color = c[i])
-    #ax.plot_surface(x, y, -z, color = c[i])
-    i = i + 5
+    i=i+10
+    ax.plot([x[i], x[i+1]], [y[i], y[i+1]], [z[i], z[i+1]], color=c[i], linewidth=2)
+    ax.plot([x[i+1], x[i+2]], [y[i+1], y[i+2]], [z[i+1], z[i+2]], color='orange', linewidth = 2)
+    
+
+
 
 ani = FuncAnimation(plt.gcf(), animate, interval=20)
 plt.tight_layout()
-ax.set_xlim([-1, 1])
-ax.set_ylim([-1, 1])
-ax.set_zlim([-1, 1]) 
+#ax.set_xlim([-1, 1])
+#ax.set_ylim([-1, 1])
+#ax.set_zlim([-1, 1]) 
 ax.set_box_aspect([1, 1, 1])
 plt.show()
